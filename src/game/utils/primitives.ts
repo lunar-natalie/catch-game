@@ -1,0 +1,52 @@
+/**
+ * @file Primitive data types for game rendering and logic routines.
+ * @author Natalie Wiggins <islifepeachy@outlook.com>
+ * @version 1.0.0
+ * @copyright (c) 2023 Natalie Wiggins, Ceri Miller and Sulaiman Syed.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/**
+ * Represents a 2D vector.
+ */
+export interface V2d {
+    x: number;
+    y: number;
+}
+
+/**
+ * Represents a 1D direction in the x-axis.
+ */
+export interface XDirection {
+    left: boolean;
+    right: boolean;
+}
+
+/**
+ * Represents a color by the values of its RGBA components.
+ */
+export interface ColorComponents {
+    /** Red component (0-255). */
+    red: number;
+
+    /** Green component (0-255). */
+    green: number;
+
+    /** Blue component (0-255). */
+    blue: number;
+
+    /** Alpha component (0-255). */
+    alpha?: number;
+}
