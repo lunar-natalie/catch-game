@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start development environment",
+            "detail": "Updates packages and runs the development server",
+            "dependsOn": [
+                "Update packages",
+                "Start development server"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Update packages",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "install"
+            ]
+        },
+        {
+            "label": "Start development server",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "start"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
