@@ -25,7 +25,7 @@ import { Sketch } from "@game/sketch";
 /**
  * Represents the drawing functionality, game logic and event handlers to be
  * used in a distinct stage of the game's sketch. A scene should be able to
- * represent any graphical data independantly from any other scene.
+ * represent any graphical data independently from any other scene.
  */
 export abstract class Scene {
     /** Parent sketch from which the scene should have been initialized. */
