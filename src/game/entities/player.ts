@@ -179,9 +179,9 @@ export class Player extends MovingEntity {
      *
      * @param p - p5 instance.
      * @param currentAxisVelocity - The current velocity in pixels per
-     * milisecond along the single axis of the canvas.
+     * millisecond along the single axis of the canvas.
      * @param axisAcceleration - The current acceleration in pixels per
-     * milisecond squared along the single axis of the canvas.
+     * millisecond squared along the single axis of the canvas.
      * @param axisDecelerationModifier - Positive value for deceleration in
      * pixels per millisecond squared along a single axis of the canvas. This
      * may intentionally counteract the current acceleration.
@@ -205,7 +205,7 @@ export class Player extends MovingEntity {
      * @param p - p5 instance.
      * @param currentAxisPosition - The current position in pixels along the
      * single axis of the canvas.
-     * @param axisVelocity - The velocity in pixels per milisecond along the
+     * @param axisVelocity - The velocity in pixels per millisecond along the
      * single axis of the canvas.
      */
     private calcAxisPosition(p: p5, currentAxisPosition: number,
