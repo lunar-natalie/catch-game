@@ -20,7 +20,7 @@
 
 import * as p5 from "p5";
 
-import { ColorAttributes } from "@utils/primitives";
+import { ColorComponents } from "@utils/primitives";
 import { Drawable } from "@utils/drawable"
 
 export class Title implements Drawable {
@@ -50,6 +50,6 @@ export class Title implements Drawable {
 export interface TextLine {
     str: string;
     fontSize: number;
-    color: ColorAttributes;
+    color: ColorComponents;
     yEndPadding: number;
 }

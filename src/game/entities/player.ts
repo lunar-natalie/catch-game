@@ -21,7 +21,7 @@
 import * as p5 from "p5";
 
 import { MovingEntity } from "@utils/entity";
-import { XDirection } from "@utils/primitives";
+import { V2d, XDirection } from "@utils/primitives";
 
 export class Player extends MovingEntity {
     /** x- and y-acceleration in pixels per millisecond squared. */
@@ -49,13 +49,13 @@ export class Player extends MovingEntity {
     /** Jump flag set by user input. */
     isJumping: boolean;
 
-    /** 
+    /**
      * Flag signifying upwards acceleration in the y-axis, set at the start of a
      * jump.
      */
     private isRising: boolean;
 
-    /** 
+    /**
      * Flag signifying balanced acceleration in the y-axis, set when the maximum
      * jump speed is reached.
      */
@@ -69,7 +69,6 @@ export class Player extends MovingEntity {
         super();
         this.acceleration = { x: 0, y: 0 };
         this.accelerationModifier = { x: 0, y: 0 };
-        this.deceleration = { x: 0, y: 0 };
         this.decelerationModifier = { x: 0, y: 0 };
         this.maxSpeed = { x: 0, y: 0 };
         this.inputDirection = { left: false, right: false };

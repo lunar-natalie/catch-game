@@ -75,7 +75,7 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     draw(p: p5): void {
-        p.clear();
+        p.clear(0, 0, 0, 0);
         p.background(0);
         this.player.update(p);
         this.player.draw(p);
