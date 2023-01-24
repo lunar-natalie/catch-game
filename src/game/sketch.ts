@@ -78,7 +78,7 @@ export class Sketch {
      * range, and is otherwise resolved.
      */
     activateScene(index: number): Promise<void> {
-        return new Promise<null>((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             // Check range.
             if (this.scenes.length === 0
                 || index < 0
