@@ -23,14 +23,31 @@ import * as p5 from "p5";
 import { ColorComponents } from "@utils/primitives";
 import { Drawable } from "@utils/drawable"
 
+/**
+ * Graphical center-aligned text object.
+ */
 export class Title implements Drawable {
+    /**
+     * Data and properties for each line of text.
+     */
     lines: TextLine[];
 
+    /**
+     * Creates a new title text object.
+     *
+     * @param lines Data and properties for each line of text.
+     */
     constructor(lines: TextLine[] = []) {
         this.lines = lines;
     }
 
-    draw(p: p5): void {
+    /**
+     * Draws each line of text onto the canvas, horizontally centered and
+     * starting aligned to the vertical center.
+     *
+     * @param p p5 instance.
+     */
+    draw(p: p5) {
         if (this.lines.length === 0) {
             return;
         }
@@ -47,9 +64,19 @@ export class Title implements Drawable {
     }
 }
 
+/**
+ * Represents the data and properties for an individual line of text.
+ */
 export interface TextLine {
+    /** String to display. */
     str: string;
+
+    /** Font size in points. */
     fontSize: number;
+
+    /** RGBA fill color. */
     color: ColorComponents;
+
+    /** Padding to apply to the vertical end of the text, in pixels. */
     yEndPadding: number;
 }
