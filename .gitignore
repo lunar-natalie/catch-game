@@ -1,8 +1,9 @@
 .breakpoints
 .cache
 .config
+.parcel-cache
+.replit
+.upm
 dist
 node_modules
-.replit
 replit.nix
-.upm
