@@ -35,7 +35,7 @@ export class Title implements Drawable {
     /**
      * Creates a new title text object.
      *
-     * @param lines Data and properties for each line of text.
+     * @param lines - Data and properties for each line of text.
      */
     constructor(lines: TextLine[] = []) {
         this.lines = lines;
@@ -45,7 +45,7 @@ export class Title implements Drawable {
      * Draws each line of text onto the canvas, horizontally centered and
      * starting aligned to the vertical center.
      *
-     * @param p p5 instance.
+     * @param p - p5 instance.
      */
     draw(p: p5) {
         if (this.lines.length === 0) {
