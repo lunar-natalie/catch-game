@@ -1,17 +1,17 @@
 # Catch Game
-2D item collector game for A level Computer Science.
+Web-based 2D item collector game for A level Computer Science.
 
 See https://replit.com/@lunarnatalie/catch-game for an online version.
 
 ## Table of contents
 * [Catch Game](#catch-game)
-    * [Table of contents](#table-of-contents)
-    * [Documentation](#documentation)
-    * [Development dependencies](#development-dependencies)
-    * [Development server](#development-server)
-        * [Standalone](#standalone)
-        * [VS Code](#vs-code)
-    * [License](#license)
+  * [Table of contents](#table-of-contents)
+  * [Documentation](#documentation)
+  * [Development dependencies](#development-dependencies)
+  * [Development server](#development-server)
+    * [Standalone](#standalone)
+    * [VS Code](#vs-code)
+  * [License](#license)
 
 ## Documentation
 * POSIX shell commands to be run as user are denoted by shell code blocks.
