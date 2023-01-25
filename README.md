@@ -23,9 +23,9 @@ See https://replit.com/@lunarnatalie/catch-game for an online version.
 * `yarn`
 
 ## Development server
-The local server runs on http://localhost:1234. [Chromium][www-chromium]
-(version 100 and newer) and [Mozilla Firefox][www-firefox] (version 100 and
-newer) are supported.
+The local server runs on http://localhost:1234. The supported browsers for
+running the game are [Chromium][www-chromium] (version 100 and newer) and
+[Mozilla Firefox][www-firefox] (version 100 and newer).
 
 ### Standalone
 ```shell
