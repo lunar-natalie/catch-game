@@ -29,7 +29,7 @@ import { Sprite } from "@utils/sprite";
  */
 export class Collectible extends MovingEntity {
     /**
-     * Creates a new collectible item.
+     * Creates a new collectible entity.
      *
      * @param x - x-coordinate in pixels.
      * @param y - y-coordinate in pixels.
@@ -42,6 +42,12 @@ export class Collectible extends MovingEntity {
         super({ x: x, y: y, dx: dx, dy: dy, sprite: sprite});
     }
 
+    /**
+     * Updates the canvas position of the collectible sprite using the current
+     * trajectory properties and hitbox limits.
+     *
+     * @param p - p5 instance.
+     */
     update(p: p5): void {
         this.updatePosition(p);
     }
@@ -53,7 +59,7 @@ export class Collectible extends MovingEntity {
      * @param p - p5 instance.
      */
     private updatePosition(p: p5): void {
-        this.position.y = this.calcAxisPosition(p, {
+        this.position.y = Collectible.calcAxisPosition(p, {
             currentPosition: this.position.y,
             velocity: this.velocity.y
         });
