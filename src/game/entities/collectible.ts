@@ -60,8 +60,7 @@ export class Collectible extends MovingEntity {
      */
     private updatePosition(p: p5): void {
         this.position.y = Collectible.calcAxisPosition(p, {
-            currentPosition: this.position.y,
-            velocity: this.velocity.y
+            currentPosition: this.position.y, velocity: this.velocity.y
         });
     }
 

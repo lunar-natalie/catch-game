@@ -134,13 +134,11 @@ export class Player extends MovingEntity {
         }
 
         this.velocity.x = Player.calcAxisVelocity(p, {
-            currentVelocity: this.velocity.x,
-            acceleration: this.acceleration.x,
+            currentVelocity: this.velocity.x, acceleration: this.acceleration.x,
             decelerationModifier: this.decelerationModifier.x
         });
         this.velocity.y = Player.calcAxisVelocity(p, {
-            currentVelocity: this.velocity.y,
-            acceleration: this.acceleration.y,
+            currentVelocity: this.velocity.y, acceleration: this.acceleration.y,
             decelerationModifier: this.decelerationModifier.y
         });
 
@@ -164,12 +162,10 @@ export class Player extends MovingEntity {
      */
     private updatePosition(p: p5): void {
         this.position.x = Player.calcAxisPosition(p, {
-            currentPosition: this.position.x,
-            velocity: this.velocity.x
+            currentPosition: this.position.x, velocity: this.velocity.x
         });
         this.position.y = Player.calcAxisPosition(p, {
-            currentPosition: this.position.y,
-            velocity: this.velocity.y
+            currentPosition: this.position.y, velocity: this.velocity.y
         });
 
         if (this.position.x < this.sprite.centerPoint.x) {
