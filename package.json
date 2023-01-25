@@ -1,7 +1,7 @@
 {
   "name": "catch-game",
   "version": "1.0.0",
-  "description": "2D item collection platformer game for A level Computer Science",
+  "description": "2D item collector game for A level Computer Science",
   "source": "src/index.html",
   "targets": {
     "default": {
