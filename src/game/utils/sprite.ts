@@ -37,10 +37,14 @@ export class Sprite {
     private _size: V2d;
 
     /**
-     * Creates an empty sprite with a size of {0, 0} and center point {0, 0}.
+     * Creates a new sprite object.
+     *
+     * @param width - Width of the sprite in pixels.
+     * @param height - Height of the sprite in pixels.
      */
-    constructor() {
-        this.size = { x: 0, y: 0 };
+    constructor({ width = 0, height = 0 }:
+        { width?: number; height?: number; } = {}) {
+        this.size = { x: width, y: height };
     }
 
     /** Size of the graphical object in pixels. */

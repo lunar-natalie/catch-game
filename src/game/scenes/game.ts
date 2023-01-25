@@ -20,15 +20,31 @@
 
 import * as p5 from "p5";
 
+import { Collectible } from "@entities/collectible";
+import { Entity } from "@utils/entity";
 import { Player } from "@entities/player";
 import { Scene } from "@utils/scene";
 import { Sketch } from "@game/sketch";
+import { Sprite } from "@utils/sprite";
 
 /**
  * Scene for the main game.
  */
 export class Game extends Scene {
+    /** All entities to be updated and drawn to the canvas. */
+    private entities: Entity[];
+
+    /** User-controllable player entity. */
     private player: Player;
+
+    /**
+     * Time in milliseconds until a new collectible item entity should be
+     * spawned.
+     */
+    private spawnTimer: number;
+
+    /** Default value to reset {@link spawnTimer} to. */
+    private spawnInterval: number = 600;
 
     /**
      * Creates the game scene.
@@ -52,6 +68,9 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     setup(p: p5): void {
+        // Initialize entity array.
+        this.entities = [];
+
         // Initialize player properties.
         this.player = new Player();
         this.player.sprite.size = { x: 200, y: 200 };
@@ -59,6 +78,9 @@ export class Game extends Scene {
         this.player.decelerationModifier = { x: 0.0075, y: 0.005 };
         this.player.maxSpeed = { x: 0.75, y: 2 };
         this.player.resetPosition(p);
+
+        // Initialize timer.
+        this.spawnTimer = 0;
     }
 
     /**
@@ -67,7 +89,7 @@ export class Game extends Scene {
      * active.
      *
      * Clears the canvas, sets canvas properties and updates and draws all
-     * current game object.
+     * current game objects.
      *
      * See {@link Scene.draw}, {@link Sketch.draw} and {@link p5.draw} for more
      * information.
@@ -75,10 +97,57 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     draw(p: p5): void {
+        // Reset canvas base.
         p.clear(0, 0, 0, 0);
         p.background(0);
+
+        // Conditionally spawn collectibles.
+        this.updateSpawnTimer(p);
+
+        // Call entity update routines comprising the main game logic.
         this.player.update(p);
+        this.entities.forEach((entity, _i, _arr) => {
+            entity.update(p);
+        });
+
+        // Draw all entities.
         this.player.draw(p);
+        this.entities.forEach((entity, _i, _arr) => {
+            entity.draw(p);
+        });
+    }
+
+    /**
+     * Updates the collectible spawn timer and spawns a collectible if the timer
+     * has completed.
+     *
+     * @param p - p5 instance.
+     */
+    updateSpawnTimer(p: p5): void {
+        if (this.spawnTimer <= 0) {
+            this.spawnTimer = this.spawnInterval;
+            this.spawnCollectible(p);
+        } else {
+            this.spawnTimer -= p.deltaTime;
+        }
+    }
+
+    /**
+     * Pushes a new collectible entity to the entities array, randomly
+     * positioned on the x-axis and moving from the top to the bottom of the
+     * screen.
+     *
+     * @param p - p5 instance.
+     */
+    spawnCollectible(p: p5): void {
+        let collectibleSprite = new Sprite({ width: 100, height: 100 });
+        let collectible = new Collectible({
+            x: Math.random() * p.width,
+            y: -20,
+            dy: 0.5,
+            sprite: collectibleSprite
+        });
+        this.entities.push(collectible);
     }
 
     /**
