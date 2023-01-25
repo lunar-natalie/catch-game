@@ -1,6 +1,41 @@
 # Catch Game
 2D item collector game for A level Computer Science.
 
+See https://replit.com/@lunarnatalie/catch-game for an online version.
+
+## Table of contents
+* [Catch Game](#catch-game)
+    * [Table of contents](#table-of-contents)
+    * [Documentation](#documentation)
+    * [Development dependencies](#development-dependencies)
+    * [Development server](#development-server)
+        * [Standalone](#standalone)
+        * [VS Code](#vs-code)
+    * [License](#license)
+
+## Documentation
+* POSIX shell commands to be run as user are denoted by shell code blocks.
+* 'Visual Studio Code' and 'Code - OSS' are abbreviated to VS Code.
+* Documentation and code symbols are written in United States English in order
+  to adhere to international standards and frameworks.
+
+## Development dependencies
+* `yarn`
+
+## Development server
+The local server runs on http://localhost:1234. [Chromium][www-chromium]
+(version 100 and newer) and [Mozilla Firefox][www-firefox] (version 100 and
+newer) are supported.
+
+### Standalone
+```shell
+yarn install && yarn start
+```
+
+### VS Code
+* Run Build Task (`Start development environment`)
+  * Default keybind: `shift + ctrl/cmd + b`
+
 ## License
 Copyright (c) 2023 Natalie Wiggins, Ceri Miller and Sulaiman Syed.
 
@@ -20,3 +55,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 Written by Natalie Wiggins, Ceri Miller and Sulaiman Syed.
 
 See `LICENSE` for more information.
+
+
+[www-chromium]: https://www.chromium.org/Home/
+[www-firefox]: https://www.mozilla.org/en-GB/firefox/
