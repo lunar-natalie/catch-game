@@ -142,9 +142,11 @@ export class Game extends Scene {
     spawnCollectible(p: p5): void {
         let collectibleSprite = new Sprite({ width: 100, height: 100 });
         let collectible = new Collectible({
-            x: Math.random() * p.width,
-            y: -20,
-            dy: 0.5,
+            x: collectibleSprite.centerPoint.x
+                + (Math.random()
+                    * (p.width - (2 * collectibleSprite.centerPoint.x))),
+            y: -collectibleSprite.centerPoint.y,
+            dy: 0.2,
             sprite: collectibleSprite
         });
         this.entities.push(collectible);
