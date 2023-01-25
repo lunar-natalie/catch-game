@@ -99,7 +99,7 @@ export abstract class MovingEntity extends Entity {
      * @param velocity - The velocity in pixels per millisecond along the single
      * axis of the canvas.
      */
-    protected calcAxisPosition(p: p5, { currentPosition, velocity }: {
+    protected static calcAxisPosition(p: p5, { currentPosition, velocity }: {
         currentPosition: number;
         velocity: number;
     }): number {

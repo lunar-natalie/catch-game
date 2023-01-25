@@ -133,12 +133,12 @@ export class Player extends MovingEntity {
             }
         }
 
-        this.velocity.x = this.calcAxisVelocity(p, {
+        this.velocity.x = Player.calcAxisVelocity(p, {
             currentVelocity: this.velocity.x,
             acceleration: this.acceleration.x,
             decelerationModifier: this.decelerationModifier.x
         });
-        this.velocity.y = this.calcAxisVelocity(p, {
+        this.velocity.y = Player.calcAxisVelocity(p, {
             currentVelocity: this.velocity.y,
             acceleration: this.acceleration.y,
             decelerationModifier: this.decelerationModifier.y
@@ -163,11 +163,11 @@ export class Player extends MovingEntity {
      * @param p - p5 instance.
      */
     private updatePosition(p: p5): void {
-        this.position.x = this.calcAxisPosition(p, {
+        this.position.x = Player.calcAxisPosition(p, {
             currentPosition: this.position.x,
             velocity: this.velocity.x
         });
-        this.position.y = this.calcAxisPosition(p, {
+        this.position.y = Player.calcAxisPosition(p, {
             currentPosition: this.position.y,
             velocity: this.velocity.y
         });
@@ -197,7 +197,7 @@ export class Player extends MovingEntity {
      * per millisecond squared along a single axis of the canvas. This may
      * intentionally counteract the current acceleration.
      */
-    private calcAxisVelocity(p: p5,
+    private static calcAxisVelocity(p: p5,
         { currentVelocity, acceleration, decelerationModifier }:
             {
                 currentVelocity: number;
