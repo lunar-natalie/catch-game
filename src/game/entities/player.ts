@@ -197,13 +197,11 @@ export class Player extends MovingEntity {
      * per millisecond squared along a single axis of the canvas. This may
      * intentionally counteract the current acceleration.
      */
-    private static calcAxisVelocity(p: p5,
-        { currentVelocity, acceleration, decelerationModifier }:
-            {
-                currentVelocity: number;
-                acceleration: number;
-                decelerationModifier: number;
-            }): number {
+    private static calcAxisVelocity(p: p5, { currentVelocity, acceleration,
+        decelerationModifier }: {
+            currentVelocity: number; acceleration: number;
+            decelerationModifier: number;
+        }): number {
         let velocity = currentVelocity + (p.deltaTime * acceleration);
         velocity *= 1 - (p.deltaTime * decelerationModifier);
         if ((velocity > 0 && velocity < decelerationModifier)

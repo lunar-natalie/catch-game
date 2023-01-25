@@ -100,8 +100,7 @@ export abstract class MovingEntity extends Entity {
      * axis of the canvas.
      */
     protected static calcAxisPosition(p: p5, { currentPosition, velocity }: {
-        currentPosition: number;
-        velocity: number;
+        currentPosition: number; velocity: number;
     }): number {
         return currentPosition + (p.deltaTime * velocity);
     }
