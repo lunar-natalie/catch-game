@@ -35,11 +35,16 @@ export abstract class Entity implements Drawable {
     position: V2d;
 
     /**
-     * Creates an entity with sprite and position data.
+     * Creates a new entity.
+     *
+     * @param x - x-coordinate in pixels.
+     * @param y - y-coordinate in pixels.
+     * @param sprite - Sprite with which to draw the entity.
      */
-    constructor() {
-        this.sprite = new Sprite();
-        this.position = { x: 0, y: 0 };
+    constructor({ x = 0, y = 0, sprite }:
+        { x?: number; y?: number; sprite: Sprite; }) {
+        this.position = { x: x, y: y };
+        this.sprite = sprite;
     }
 
     /**
@@ -70,10 +75,34 @@ export abstract class MovingEntity extends Entity {
     velocity: V2d;
 
     /**
-     * Creates a new moving entity with sprite, position and velocity data.
+     * Creates a new moving entity.
+     *
+     * @param x - x-coordinate in pixels.
+     * @param y - y-coordinate in pixels.
+     * @param dx - x-velocity in pixels per millisecond.
+     * @param dy - y-velocity in pixels per millisecond.
+     * @param sprite - Sprite with which to draw the entity.
      */
-    constructor() {
-        super();
-        this.velocity = { x: 0, y: 0 };
+    constructor({ x = 0, y = 0, dx = 0, dy = 0, sprite }:
+        { x?: number; y?: number; dx?: number; dy?: number; sprite: Sprite; }) {
+        super({ x: x, y: y, sprite: sprite });
+        this.velocity = { x: dx, y: dy };
+    }
+
+    /**
+     * Calculates the entity's position in pixels along a single axis of the
+     * canvas.
+     *
+     * @param p - p5 instance.
+     * @param currentPosition - The current position in pixels along the single
+     * axis of the canvas.
+     * @param velocity - The velocity in pixels per millisecond along the single
+     * axis of the canvas.
+     */
+    protected calcAxisPosition(p: p5, { currentPosition, velocity }: {
+        currentPosition: number;
+        velocity: number;
+    }): number {
+        return currentPosition + (p.deltaTime * velocity);
     }
 }

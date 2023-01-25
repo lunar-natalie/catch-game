@@ -35,14 +35,11 @@ export class Collectible extends MovingEntity {
      * @param y - y-coordinate in pixels.
      * @param dx - x-velocity in pixels per millisecond.
      * @param dy - y-velocity in pixels per millisecond.
-     * @param sprite - Sprite to draw the object.
+     * @param sprite - Sprite with which to draw the entity.
      */
     constructor({ x = 0, y = 0, dx = 0, dy = 0, sprite }:
         { x?: number; y?: number; dx?: number; dy?: number; sprite: Sprite; }) {
-        super();
-        this.position = { x: x, y: y };
-        this.velocity = { x: dx, y: dy };
-        this.sprite = sprite;
+        super({ x: x, y: y, dx: dx, dy: dy, sprite: sprite});
     }
 
     update(p: p5): void {
@@ -56,8 +53,10 @@ export class Collectible extends MovingEntity {
      * @param p - p5 instance.
      */
     private updatePosition(p: p5): void {
-        this.position.y = this.calcAxisPosition(p, this.position.y,
-            this.velocity.y);
+        this.position.y = this.calcAxisPosition(p, {
+            currentPosition: this.position.y,
+            velocity: this.velocity.y
+        });
 
         if (this.position.x < this.sprite.centerPoint.x) {
             this.position.x = this.sprite.centerPoint.x;
@@ -69,21 +68,6 @@ export class Collectible extends MovingEntity {
         } else if (this.position.y > p.height - this.sprite.centerPoint.y) {
             this.position.y = p.height - this.sprite.centerPoint.y;
         }
-    }
-
-    /**
-     * Calculates the entity position in pixels along a single axis of the
-     * canvas.
-     *
-     * @param p - p5 instance.
-     * @param currentAxisPosition - The current position in pixels along the
-     * single axis of the canvas.
-     * @param axisVelocity - The velocity in pixels per millisecond along the
-     * single axis of the canvas.
-     */
-    private calcAxisPosition(p: p5, currentAxisPosition: number,
-        axisVelocity: number): number {
-        return currentAxisPosition + (p.deltaTime * axisVelocity);
     }
 
     /**

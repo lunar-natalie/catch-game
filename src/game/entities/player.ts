@@ -22,6 +22,7 @@ import * as p5 from "p5";
 
 import { MovingEntity } from "@utils/entity";
 import { V2d, XDirection } from "@utils/primitives";
+import { Sprite } from "@game/utils/sprite";
 
 export class Player extends MovingEntity {
     /** x- and y-acceleration in pixels per millisecond squared. */
@@ -66,7 +67,7 @@ export class Player extends MovingEntity {
      * property and state flag.
      */
     constructor() {
-        super();
+        super({ sprite: new Sprite() });
         this.acceleration = { x: 0, y: 0 };
         this.accelerationModifier = { x: 0, y: 0 };
         this.decelerationModifier = { x: 0, y: 0 };
@@ -132,10 +133,16 @@ export class Player extends MovingEntity {
             }
         }
 
-        this.velocity.x = this.calcAxisVelocity(p, this.velocity.x,
-            this.acceleration.x, this.decelerationModifier.x);
-        this.velocity.y = this.calcAxisVelocity(p, this.velocity.y,
-            this.acceleration.y, this.decelerationModifier.y);
+        this.velocity.x = this.calcAxisVelocity(p, {
+            currentVelocity: this.velocity.x,
+            acceleration: this.acceleration.x,
+            decelerationModifier: this.decelerationModifier.x
+        });
+        this.velocity.y = this.calcAxisVelocity(p, {
+            currentVelocity: this.velocity.y,
+            acceleration: this.acceleration.y,
+            decelerationModifier: this.decelerationModifier.y
+        });
 
         if (this.velocity.x < -this.maxSpeed.x) {
             this.velocity.x = -this.maxSpeed.x;
@@ -156,10 +163,14 @@ export class Player extends MovingEntity {
      * @param p - p5 instance.
      */
     private updatePosition(p: p5): void {
-        this.position.x = this.calcAxisPosition(p, this.position.x,
-            this.velocity.x);
-        this.position.y = this.calcAxisPosition(p, this.position.y,
-            this.velocity.y);
+        this.position.x = this.calcAxisPosition(p, {
+            currentPosition: this.position.x,
+            velocity: this.velocity.x
+        });
+        this.position.y = this.calcAxisPosition(p, {
+            currentPosition: this.position.y,
+            velocity: this.velocity.y
+        });
 
         if (this.position.x < this.sprite.centerPoint.x) {
             this.position.x = this.sprite.centerPoint.x;
@@ -178,39 +189,28 @@ export class Player extends MovingEntity {
      * axis of the canvas.
      *
      * @param p - p5 instance.
-     * @param currentAxisVelocity - The current velocity in pixels per
-     * millisecond along the single axis of the canvas.
-     * @param axisAcceleration - The current acceleration in pixels per
-     * millisecond squared along the single axis of the canvas.
-     * @param axisDecelerationModifier - Positive value for deceleration in
-     * pixels per millisecond squared along a single axis of the canvas. This
-     * may intentionally counteract the current acceleration.
+     * @param currentVelocity - The current velocity in pixels per millisecond
+     * along the single axis of the canvas.
+     * @param acceleration - The current acceleration in pixels per millisecond
+     * squared along the single axis of the canvas.
+     * @param decelerationModifier - Positive value for deceleration in pixels
+     * per millisecond squared along a single axis of the canvas. This may
+     * intentionally counteract the current acceleration.
      */
-    private calcAxisVelocity(p: p5, currentAxisVelocity: number,
-        axisAcceleration: number, axisDecelerationModifier: number): number {
-        let axisVelocity = currentAxisVelocity
-            + (p.deltaTime * axisAcceleration);
-        axisVelocity *= 1 - (p.deltaTime * axisDecelerationModifier);
-        if ((axisVelocity > 0 && axisVelocity < axisDecelerationModifier)
-            || (axisVelocity < 0 && axisVelocity > -axisDecelerationModifier)) {
+    private calcAxisVelocity(p: p5,
+        { currentVelocity, acceleration, decelerationModifier }:
+            {
+                currentVelocity: number;
+                acceleration: number;
+                decelerationModifier: number;
+            }): number {
+        let velocity = currentVelocity + (p.deltaTime * acceleration);
+        velocity *= 1 - (p.deltaTime * decelerationModifier);
+        if ((velocity > 0 && velocity < decelerationModifier)
+            || (velocity < 0 && velocity > -decelerationModifier)) {
             return 0;
         }
-        return axisVelocity;
-    }
-
-    /**
-     * Calculates the player's position in pixels along a single axis of the
-     * canvas.
-     *
-     * @param p - p5 instance.
-     * @param currentAxisPosition - The current position in pixels along the
-     * single axis of the canvas.
-     * @param axisVelocity - The velocity in pixels per millisecond along the
-     * single axis of the canvas.
-     */
-    private calcAxisPosition(p: p5, currentAxisPosition: number,
-        axisVelocity: number): number {
-        return currentAxisPosition + (p.deltaTime * axisVelocity);
+        return velocity;
     }
 
     /**
