@@ -156,7 +156,7 @@ export class Player extends MovingEntity {
 
     /**
      * Updates the canvas position of the player sprite using the current
-     * trajectory properties and hitbox limits.
+     * trajectory properties and canvas limits.
      *
      * @param p - p5 instance.
      */

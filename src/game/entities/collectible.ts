@@ -43,8 +43,8 @@ export class Collectible extends MovingEntity {
     }
 
     /**
-     * Updates the canvas position of the collectible sprite using the current
-     * trajectory properties and hitbox limits.
+     * Updates the canvas position of the entity using the current trajectory
+     * properties.
      *
      * @param p - p5 instance.
      */
@@ -54,7 +54,7 @@ export class Collectible extends MovingEntity {
 
     /**
      * Updates the canvas position of the entity using the current trajectory
-     * properties and hitbox limits.
+     * properties.
      *
      * @param p - p5 instance.
      */
