@@ -63,17 +63,6 @@ export class Collectible extends MovingEntity {
             currentPosition: this.position.y,
             velocity: this.velocity.y
         });
-
-        if (this.position.x < this.sprite.centerPoint.x) {
-            this.position.x = this.sprite.centerPoint.x;
-        } else if (this.position.x > p.width - this.sprite.centerPoint.x) {
-            this.position.x = p.width - this.sprite.centerPoint.x;
-        }
-        if (this.position.y < this.sprite.centerPoint.y) {
-            this.position.y = this.sprite.centerPoint.y;
-        } else if (this.position.y > p.height - this.sprite.centerPoint.y) {
-            this.position.y = p.height - this.sprite.centerPoint.y;
-        }
     }
 
     /**
