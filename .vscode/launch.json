@@ -10,7 +10,8 @@
             "sourceMapPathOverrides": {
                 "/__parcel_source_root/*": "${webRoot}/*"
             },
-            "timeout": 50000
+            "timeout": 50000,
+            "preLaunchTask": "Start development environment"
         }
     ]
 }

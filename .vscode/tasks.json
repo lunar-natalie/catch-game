@@ -3,12 +3,16 @@
     "tasks": [
         {
             "label": "Start development environment",
-            "detail": "Updates packages and runs the development server",
+            "detail": "Updates packages, continuously lints and builds source code and runs the development server",
             "dependsOn": [
                 "Update packages",
-                "Start development server"
+                "Serve and lint"
             ],
-            "dependsOrder": "sequence"
+            "dependsOrder": "sequence",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "label": "Update packages",
@@ -19,16 +23,36 @@
             ]
         },
         {
+            "label": "Serve and lint",
+            "detail": "Continuously lints source code and runs the development server",
+            "dependsOn": [
+                "Lint (Watch)",
+                "Start development server"
+            ],
+            "dependsOrder": "parallel",
+            "problemMatcher": "$eslint-stylish"
+        },
+        {
+            "label": "Lint (Watch)",
+            "detail": "Lints source code and watches for file changes",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "lint-watch"
+            ],
+            "presentation": {
+                "panel": "dedicated"
+            },
+            "isBackground": true
+        },
+        {
             "label": "Start development server",
+            "detail": "Builds client code and runs the development web server",
             "type": "shell",
             "command": "yarn",
             "args": [
                 "start"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            ]
         }
     ]
 }

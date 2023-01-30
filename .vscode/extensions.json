@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig",
+        "stkb.rewrap",
+        "streetsidesoftware.code-spell-checker",
+        "yzhang.markdown-all-in-one"
+    ]
+}
