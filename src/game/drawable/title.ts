@@ -21,7 +21,7 @@
 import * as p5 from "p5";
 
 import { ColorComponents } from "@utils/primitives";
-import { Drawable } from "@utils/drawable"
+import { Drawable } from "@utils/drawable";
 
 /**
  * Graphical center-aligned text object.
@@ -54,7 +54,7 @@ export class Title implements Drawable {
 
         let totalHeight = -this.lines[0].fontSize / 2;
         p.textAlign(p.CENTER);
-        this.lines.forEach((line, _i, _arr) => {
+        this.lines.forEach((line) => {
             p.textSize(line.fontSize);
             p.fill(line.color.red, line.color.blue, line.color.green,
                 line.color.alpha);

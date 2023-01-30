@@ -20,7 +20,7 @@
 
 import * as p5 from "p5";
 
-import { Scene } from "@utils/scene";
+import { Scene, SceneSetupHandler, SceneKeyPressedHandler } from "@utils/scene";
 import { Sketch } from "@game/sketch";
 import { Title } from "@drawable/title";
 
@@ -28,7 +28,8 @@ import { Title } from "@drawable/title";
  * Scene for the Main Menu. Shows title and information, and waits for input
  * before advancing the scene in the sketch.
  */
-export class Menu extends Scene {
+export class Menu extends Scene implements SceneSetupHandler,
+    SceneKeyPressedHandler {
     private title: Title;
 
     /**
@@ -49,10 +50,8 @@ export class Menu extends Scene {
      *
      * See {@link Scene.setup}, {@link Sketch.setup} and {@link p5.setup} for
      * more information.
-     *
-     * @param _p - p5 instance.
      */
-    setup(_p: p5): void {
+    setup(): void {
         this.title = new Title([
             {
                 str: "Catch Game",
@@ -97,9 +96,8 @@ export class Menu extends Scene {
      * {@link p5.keyPressed} for more information.
      *
      * @param p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
      */
-    keyPressed(p: p5, _event?: object): void {
+    keyPressed(p: p5): void {
         if (p.keyCode === p.RETURN) {
             this.sketch.advanceScene().catch((reason) => {
                 console.error(reason);

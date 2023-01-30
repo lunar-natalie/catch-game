@@ -23,14 +23,16 @@ import * as p5 from "p5";
 import { Collectible } from "@entities/collectible";
 import { Entity } from "@utils/entity";
 import { Player } from "@entities/player";
-import { Scene } from "@utils/scene";
+import { Scene, SceneKeyPressedHandler, SceneKeyReleasedHandler }
+    from "@utils/scene";
 import { Sketch } from "@game/sketch";
 import { Sprite } from "@utils/sprite";
 
 /**
  * Scene for the main game.
  */
-export class Game extends Scene {
+export class Game extends Scene implements SceneKeyPressedHandler,
+    SceneKeyReleasedHandler {
     /** All entities to be updated and drawn to the canvas. */
     private entities: Entity[];
 
@@ -44,7 +46,7 @@ export class Game extends Scene {
     private spawnTimer: number;
 
     /** Default value to reset {@link spawnTimer} to. */
-    private spawnInterval: number = 600;
+    private spawnInterval = 600;
 
     /**
      * Creates the game scene.
@@ -106,13 +108,13 @@ export class Game extends Scene {
 
         // Call entity update routines comprising the main game logic.
         this.player.update(p);
-        this.entities.forEach((entity, _i, _arr) => {
+        this.entities.forEach((entity) => {
             entity.update(p);
         });
 
         // Draw all entities.
         this.player.draw(p);
-        this.entities.forEach((entity, _i, _arr) => {
+        this.entities.forEach((entity) => {
             entity.draw(p);
         });
     }
@@ -140,8 +142,8 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     spawnCollectible(p: p5): void {
-        let collectibleSprite = new Sprite({ width: 100, height: 100 });
-        let collectible = new Collectible({
+        const collectibleSprite = new Sprite({ width: 100, height: 100 });
+        const collectible = new Collectible({
             x: collectibleSprite.centerPoint.x
                 + (Math.random()
                     * (p.width - (2 * collectibleSprite.centerPoint.x))),
@@ -163,11 +165,10 @@ export class Game extends Scene {
      * {@link p5.keyPressed} for more information.
      *
      * @param p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
      */
-    keyPressed(p: p5, _event?: object): void {
+    keyPressed(p: p5): void {
         switch (p.key) {
-            case ' ':
+            case " ":
                 this.player.isJumping = true;
                 break;
             default:
@@ -191,11 +192,10 @@ export class Game extends Scene {
      * {@link p5.keyReleased} for more information.
      *
      * @param p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
      */
-    keyReleased(p: p5, _event?: object): void {
+    keyReleased(p: p5): void {
         switch (p.key) {
-            case ' ':
+            case " ":
                 this.player.isJumping = false;
                 break;
             default:

@@ -41,16 +41,55 @@ export abstract class Scene {
     }
 
     /**
+     * Continuously executes the lines of code contained inside its block until
+     * the program is stopped or {@link p5.noLoop} is called when the scene is
+     * active.
+     *
+     * See {@link Sketch.draw} and {@link p5.draw} for more information.
+     *
+     * @param p - p5 instance.
+     */
+    abstract draw(p: p5): void;
+
+    static hasPreloadHandler(scene: object):
+        scene is ScenePreloadHandler {
+        return scene && "preload" in scene
+            && typeof scene["preload"] === "function";
+    }
+
+    static hasSetupHandler(scene: object):
+        scene is SceneSetupHandler {
+        return scene && "setup" in scene
+            && typeof scene["setup"] === "function";
+    }
+
+    static hasKeyPressedHandler(scene: object):
+        scene is SceneKeyPressedHandler {
+        return scene && "keyPressed" in scene
+            && typeof scene["keyPressed"] === "function";
+    }
+
+    static hasKeyReleasedHandler(scene: object):
+        scene is SceneKeyReleasedHandler {
+        return scene && "keyReleased" in scene
+            && typeof scene["keyReleased"] === "function";
+    }
+}
+
+
+export interface ScenePreloadHandler {
+    /**
      * Called before {@link setup} to handle asynchronous loading of external
      * files in a blocking way.
      *
      * See {@link Sketch.preload} and {@link p5.preload} for more information.
      *
-     * @param _p - p5 instance.
+     * @param p - p5 instance.
      */
-    preload(_p: p5): void {
-    }
+    preload(p: p5): void;
+}
 
+export interface SceneSetupHandler {
     /**
      * Called once when the sketch starts, used to define initial environment
      * properties such as screen size and background color and to load media
@@ -58,23 +97,12 @@ export abstract class Scene {
      *
      * See {@link Sketch.setup} and {@link p5.setup} for more information.
      *
-     * @param _p - p5 instance.
+     * @param p - p5 instance.
      */
-    setup(_p: p5): void {
-    }
+    setup(p: p5): void;
+}
 
-    /**
-     * Continuously executes the lines of code contained inside its block until
-     * the program is stopped or {@link p5.noLoop} is called when the scene is
-     * active.
-     *
-     * See {@link Sketch.draw} and {@link p5.draw} for more information.
-     *
-     * @param _p - p5 instance.
-     */
-    draw(_p: p5): void {
-    }
-
+export interface SceneKeyPressedHandler {
     /**
      * Called once every time a key is pressed when the scene is active. The key
      * code for the key that was pressed is stored in the {@link p5.key}
@@ -83,21 +111,21 @@ export abstract class Scene {
      * See {@link Sketch.keyPressed} and {@link p5.keyPressed} for more
      * information.
      *
-     * @param _p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
+     * @param p - p5 instance.
+     * @param event - KeyboardEvent callback argument.
      */
-    keyPressed(_p: p5, _event?: object): void {
-    }
+    keyPressed(p: p5, event?: object): void;
+}
 
+export interface SceneKeyReleasedHandler {
     /**
      * Called once every time a key is released when the scene is active.
      *
      * See {@link Sketch.keyReleased}, {@link p5.key}, {@link p5.keyCode}, and
      * {@link p5.keyReleased} for more information.
      *
-     * @param _p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
+     * @param p - p5 instance.
+     * @param event - KeyboardEvent callback argument.
      */
-    keyReleased(_p: p5, _event?: object): void {
-    }
+    keyReleased(p: p5, event?: object): void;
 }

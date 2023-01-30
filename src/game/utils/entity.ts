@@ -51,19 +51,17 @@ export abstract class Entity implements Drawable {
      * Updates all calculated properties of the entity. Should be called once
      * per frame before calling {@link draw}.
      *
-     * @param _p - p5 instance.
+     * @param p - p5 instance.
      */
-    update(_p: p5): void {
-    }
+    abstract update(p: p5): void;
 
     /**
      * Draws the entity's image representation onto the canvas. Should be called
      * once per frame after calling {@link update}.
      *
-     * @param _p - p5 instance.
+     * @param p - p5 instance.
      */
-    draw(_p: p5): void {
-    }
+    abstract draw(p: p5): void;
 }
 
 /**

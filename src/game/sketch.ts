@@ -53,10 +53,11 @@ export class Sketch {
             new Menu(this),
             new Game(this)
         ];
+
         // Activate the first scene.
         this.activateScene(0).catch((reason) => {
             console.error(reason);
-        })
+        });
 
         // Bind in-class handlers to the p5 instance.
         p.preload = () => this.preload(p);
@@ -64,7 +65,7 @@ export class Sketch {
         p.draw = () => this.draw(p);
         p.keyPressed = (event?) => this.keyPressed(p, event);
         p.keyReleased = (event?) => this.keyReleased(p, event);
-        p.windowResized = (event?) => this.windowResized(p, event);
+        p.windowResized = () => this.windowResized(p);
     }
 
     /**
@@ -115,8 +116,10 @@ export class Sketch {
      * @param p - p5 instance.
      */
     private preload(p: p5): void {
-        this.scenes.forEach((scene, _i, _arr) => {
-            scene.preload(p);
+        this.scenes.forEach((scene) => {
+            if (Scene.hasPreloadHandler(scene)) {
+                scene.preload(p);
+            }
         });
     }
 
@@ -134,8 +137,10 @@ export class Sketch {
      */
     private setup(p: p5): void {
         p.createCanvas(p.windowWidth, p.windowHeight);
-        this.scenes.forEach((scene, _i, _arr) => {
-            scene.setup(p);
+        this.scenes.forEach((scene) => {
+            if (Scene.hasSetupHandler(scene)) {
+                scene.setup(p);
+            }
         });
     }
 
@@ -167,7 +172,9 @@ export class Sketch {
      * @param event - KeyboardEvent callback argument.
      */
     private keyPressed(p: p5, event?: object): void {
-        this.activeScene.keyPressed(p, event);
+        if (Scene.hasKeyPressedHandler(this.activeScene)) {
+            this.activeScene.keyPressed(p, event);
+        }
     }
 
     /**
@@ -182,7 +189,9 @@ export class Sketch {
      * @param event - KeyboardEvent callback argument.
      */
     private keyReleased(p: p5, event?: object): void {
-        this.activeScene.keyReleased(p, event);
+        if (Scene.hasKeyReleasedHandler(this.activeScene)) {
+            this.activeScene.keyReleased(p, event);
+        }
     }
 
     /**
@@ -192,9 +201,8 @@ export class Sketch {
      * new window size.
      *
      * @param p - p5 instance.
-     * @param _event - Event callback argument.
      */
-    private windowResized(p: p5, _event?: object): void {
+    private windowResized(p: p5): void {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
     }
 }
