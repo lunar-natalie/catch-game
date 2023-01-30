@@ -8,6 +8,7 @@ See https://replit.com/@lunarnatalie/catch-game for an online version.
   * [Table of contents](#table-of-contents)
   * [Documentation](#documentation)
   * [Development dependencies](#development-dependencies)
+    * [VS Code setup](#vs-code-setup)
   * [Development server](#development-server)
     * [Standalone](#standalone)
     * [VS Code](#vs-code)
@@ -21,6 +22,11 @@ See https://replit.com/@lunarnatalie/catch-game for an online version.
 
 ## Development dependencies
 * `yarn`
+
+### VS Code setup
+* Install the recommended workspace extensions when prompted, or run the
+  `Extensions: Show Recommended Extensions` command and click the
+  `Install Workspace Recommended Extensions` button in the sidebar.
 
 ## Development server
 The local server runs on http://localhost:1234. The supported browsers for
