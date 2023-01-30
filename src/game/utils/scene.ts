@@ -51,24 +51,56 @@ export abstract class Scene {
      */
     abstract draw(p: p5): void;
 
+    /**
+     * Checks if a scene implements the preload handler.
+     *
+     * See {@link ScenePreloadHandler}.
+     *
+     * @param scene - Scene to check.
+     * @returns `true` if the scene implements the handler, otherwise `false`.
+     */
     static hasPreloadHandler(scene: object):
         scene is ScenePreloadHandler {
         return scene && "preload" in scene
             && typeof scene["preload"] === "function";
     }
 
+    /**
+     * Checks if a scene implements the setup handler.
+     *
+     * See {@link SceneSetupHandler}.
+     *
+     * @param scene - Scene to check.
+     * @returns `true` if the scene implements the handler, otherwise `false`.
+     */
     static hasSetupHandler(scene: object):
         scene is SceneSetupHandler {
         return scene && "setup" in scene
             && typeof scene["setup"] === "function";
     }
 
+    /**
+     * Checks if a scene implements the key pressed event handler.
+     *
+     * See {@link SceneKeyPressedHandler}.
+     *
+     * @param scene - Scene to check.
+     * @returns `true` if the scene implements the handler, otherwise `false`.
+     */
     static hasKeyPressedHandler(scene: object):
         scene is SceneKeyPressedHandler {
         return scene && "keyPressed" in scene
             && typeof scene["keyPressed"] === "function";
     }
 
+    /**
+     * Checks if a scene implements the key released event handler.
+     *
+     * See {@link SceneKeyReleasedHandler}.
+     *
+     * @param scene - Scene to check.
+     * @returns `true` if the scene implements the handler, otherwise `false`.
+     */
     static hasKeyReleasedHandler(scene: object):
         scene is SceneKeyReleasedHandler {
         return scene && "keyReleased" in scene
@@ -76,11 +108,14 @@ export abstract class Scene {
     }
 }
 
-
+/**
+ * Implemented by scenes to provide a handler for the p5 preload event.
+ */
 export interface ScenePreloadHandler {
     /**
-     * Called before {@link setup} to handle asynchronous loading of external
-     * files in a blocking way.
+     * Called (before {@link SceneSetupHandler.setup} if implemented in the
+     * scene) to handle asynchronous loading of external files in a blocking
+     * way.
      *
      * See {@link Sketch.preload} and {@link p5.preload} for more information.
      *
@@ -89,6 +124,9 @@ export interface ScenePreloadHandler {
     preload(p: p5): void;
 }
 
+/**
+ * Implemented by scenes to provide a handler for the p5 setup event.
+ */
 export interface SceneSetupHandler {
     /**
      * Called once when the sketch starts, used to define initial environment
@@ -102,6 +140,9 @@ export interface SceneSetupHandler {
     setup(p: p5): void;
 }
 
+/**
+ * Implemented by scenes to provide a handler for the p5 key pressed event.
+ */
 export interface SceneKeyPressedHandler {
     /**
      * Called once every time a key is pressed when the scene is active. The key
@@ -117,6 +158,9 @@ export interface SceneKeyPressedHandler {
     keyPressed(p: p5, event?: object): void;
 }
 
+/**
+ * Implemented by scenes to provide a handler for the p5 key released event.
+ */
 export interface SceneKeyReleasedHandler {
     /**
      * Called once every time a key is released when the scene is active.
