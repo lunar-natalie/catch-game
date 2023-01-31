@@ -34,10 +34,16 @@ import { Sprite } from "@utils/sprite";
 export class Game extends Scene implements SceneKeyPressedHandler,
     SceneKeyReleasedHandler {
     /** All entities to be updated and drawn to the canvas. */
-    private entities: Entity[];
+    private get entities(): Entity[] {
+        const all: Entity[] = [this.player];
+        return all.concat(this.collectibles);
+    }
 
     /** User-controllable player entity. */
     private player: Player;
+
+    /** Collectible item entities. */
+    private collectibles: Collectible[];
 
     /**
      * Time in milliseconds until a new collectible item entity should be
@@ -70,8 +76,8 @@ export class Game extends Scene implements SceneKeyPressedHandler,
      * @param p - p5 instance.
      */
     setup(p: p5): void {
-        // Initialize entity array.
-        this.entities = [];
+        // Initialize arrays.
+        this.collectibles = [];
 
         // Initialize player properties.
         this.player = new Player();
@@ -106,14 +112,20 @@ export class Game extends Scene implements SceneKeyPressedHandler,
         // Conditionally spawn collectibles.
         this.updateSpawnTimer(p);
 
-        // Call entity update routines comprising the main game logic.
-        this.player.update(p);
+        // Call entity update routines comprising the internal entity movement
+        // and data logic.
         this.entities.forEach((entity) => {
             entity.update(p);
         });
 
+        // Check collisions.
+        this.collectibles.forEach((collectible, i, arr) => {
+            if (collectible.didCollide(this.player)) {
+                delete arr[i];
+            }
+        });
+
         // Draw all entities.
-        this.player.draw(p);
         this.entities.forEach((entity) => {
             entity.draw(p);
         });
@@ -125,7 +137,7 @@ export class Game extends Scene implements SceneKeyPressedHandler,
      *
      * @param p - p5 instance.
      */
-    updateSpawnTimer(p: p5): void {
+    private updateSpawnTimer(p: p5): void {
         if (this.spawnTimer <= 0) {
             this.spawnTimer = this.spawnInterval;
             this.spawnCollectible(p);
@@ -141,7 +153,7 @@ export class Game extends Scene implements SceneKeyPressedHandler,
      *
      * @param p - p5 instance.
      */
-    spawnCollectible(p: p5): void {
+    private spawnCollectible(p: p5): void {
         const collectibleSprite = new Sprite({ width: 100, height: 100 });
         const collectible = new Collectible({
             x: collectibleSprite.centerPoint.x
@@ -151,7 +163,7 @@ export class Game extends Scene implements SceneKeyPressedHandler,
             dy: 0.2,
             sprite: collectibleSprite
         });
-        this.entities.push(collectible);
+        this.collectibles.push(collectible);
     }
 
     /**

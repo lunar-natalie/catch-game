@@ -62,6 +62,23 @@ export abstract class Entity implements Drawable {
      * @param p - p5 instance.
      */
     abstract draw(p: p5): void;
+
+    /**
+     * Checks if the entity collided with another entity on the canvas.
+     *
+     * @param target - Other entity to compare position with.
+     * @returns `true` if collided, otherwise `false`.
+     */
+    didCollide(target: Entity): boolean {
+        return this.position.x + this.sprite.centerPoint.x
+                >= target.position.x - target.sprite.centerPoint.x
+            && this.position.x - this.sprite.centerPoint.x
+            <= target.position.x + target.sprite.centerPoint.x
+            && this.position.y + this.sprite.centerPoint.y
+            >= target.position.y - target.sprite.centerPoint.y
+            && this.position.y - this.sprite.centerPoint.y
+            <= target.position.y + target.sprite.centerPoint.y;
+    }
 }
 
 /**
