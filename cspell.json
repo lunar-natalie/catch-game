@@ -1,9 +1,7 @@
 {
     "version": "0.2",
     "language": "en",
-    "ignorePaths": [
-        "*.in"
-    ],
+    "ignorePaths": ["*.in"],
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
@@ -29,9 +27,7 @@
     "languageSettings": [
         {
             "languageId": "markdown",
-            "ignoreRegExpList": [
-                "markdown-code-block"
-            ]
+            "ignoreRegExpList": ["markdown-code-block"]
         }
     ]
 }
