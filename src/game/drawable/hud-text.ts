@@ -66,10 +66,10 @@ export class HudText implements Drawable {
      * @param props.labelStr - Label component character data.
      * @param props.labelFont - Label component font metadata.
      * @param props.labelFillColor - Label component fill color.
-     * @param props.valueFont - Value component font metadata (defaults to
-     * {@link props.labelFont}).
+     * @param props.valueFont - Value component font metadata (defaults to the
+     * label font).
      * @param props.valueFillColor - Value component fill color. (defaults to
-     * {@link props.labelFillColor}).
+     * the label fill color).
      */
     constructor({
         x = 0,
