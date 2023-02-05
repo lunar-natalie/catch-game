@@ -20,24 +20,40 @@
 
 import * as p5 from "p5";
 
-import { Collectible } from "@entities/collectible";
-import { Entity } from "@utils/entity";
-import { Player } from "@entities/player";
-import { Scene, SceneKeyPressedHandler, SceneKeyReleasedHandler }
-    from "@utils/scene";
+import { Collectible } from "@game/entities/collectible";
+import { Drawable } from "@game/utils/drawable";
+import { Entity } from "@game/utils/entity";
+import { HudAlignment, HudText } from "@game/drawable/hud-text";
+import { Player } from "@game/entities/player";
+import {
+    Scene,
+    SceneKeyPressedHandler,
+    SceneKeyReleasedHandler,
+} from "@game/utils/scene";
 import { Sketch } from "@game/sketch";
-import { Sprite } from "@utils/sprite";
+import { Sprite } from "@game/utils/sprite";
+import { FontMetadata } from "@game/utils/font";
 
 /**
  * Scene for the main game.
  */
-export class Game extends Scene implements SceneKeyPressedHandler,
-    SceneKeyReleasedHandler {
+export class Game
+    extends Scene
+    implements SceneKeyPressedHandler, SceneKeyReleasedHandler
+{
     /** All entities to be updated and drawn to the canvas. */
     private get entities(): Entity[] {
         const all: Entity[] = [this.player];
         return all.concat(this.collectibles);
     }
+
+    private get drawables(): Drawable[] {
+        const all: Drawable[] = [this.hudText];
+        return all.concat(this.entities);
+    }
+
+    /** Heads-up display (score counter). */
+    private hudText: HudText;
 
     /** User-controllable player entity. */
     private player: Player;
@@ -53,6 +69,20 @@ export class Game extends Scene implements SceneKeyPressedHandler,
 
     /** Default value to reset {@link spawnTimer} to. */
     private spawnInterval = 600;
+
+    /** Number of items collected by the player. Limited to 999999. */
+    private get score(): number {
+        return this._score;
+    }
+
+    private set score(value: number) {
+        if (this._score >= 999999) {
+            return;
+        }
+        this._score = value;
+    }
+
+    private _score: number;
 
     /**
      * Creates the game scene.
@@ -76,10 +106,20 @@ export class Game extends Scene implements SceneKeyPressedHandler,
      * @param p - p5 instance.
      */
     setup(p: p5): void {
-        // Initialize arrays.
+        this.hudText = new HudText({
+            y: 0,
+            hMargin: 8,
+            vMargin: 8,
+            alignment: HudAlignment.Right,
+            labelStr: "Score ",
+            labelFont: FontMetadata.auto({
+                size: 24,
+            }),
+            labelFillColor: { red: 255, green: 255, blue: 255 },
+        });
+
         this.collectibles = [];
 
-        // Initialize player properties.
         this.player = new Player();
         this.player.sprite.size = { x: 200, y: 200 };
         this.player.accelerationModifier = { x: 1, y: 0.4 };
@@ -87,8 +127,8 @@ export class Game extends Scene implements SceneKeyPressedHandler,
         this.player.maxSpeed = { x: 0.75, y: 2 };
         this.player.resetPosition(p);
 
-        // Initialize timer.
         this.spawnTimer = 0;
+        this.score = 0;
     }
 
     /**
@@ -119,15 +159,22 @@ export class Game extends Scene implements SceneKeyPressedHandler,
         });
 
         // Check collisions.
-        this.collectibles.forEach((collectible, i, arr) => {
-            if (collectible.didCollide(this.player)) {
+        this.collectibles.forEach((entity, i, arr) => {
+            if (entity.didCollide(this.player)) {
+                // Increment score and delete collectible if collided with
+                // player.
+                ++this.score;
                 delete arr[i];
             }
         });
 
-        // Draw all entities.
-        this.entities.forEach((entity) => {
-            entity.draw(p);
+        // Update HUD text.
+        this.hudText.setValueText(this.score.toString());
+        this.hudText.position.x = p.width;
+
+        // Draw all objects.
+        this.drawables.forEach((obj) => {
+            obj.draw(p);
         });
     }
 
@@ -156,12 +203,12 @@ export class Game extends Scene implements SceneKeyPressedHandler,
     private spawnCollectible(p: p5): void {
         const collectibleSprite = new Sprite({ width: 100, height: 100 });
         const collectible = new Collectible({
-            x: collectibleSprite.centerPoint.x
-                + (Math.random()
-                    * (p.width - (2 * collectibleSprite.centerPoint.x))),
+            x:
+                collectibleSprite.centerPoint.x +
+                Math.random() * (p.width - 2 * collectibleSprite.centerPoint.x),
             y: -collectibleSprite.centerPoint.y,
             dy: 0.2,
-            sprite: collectibleSprite
+            sprite: collectibleSprite,
         });
         this.collectibles.push(collectible);
     }

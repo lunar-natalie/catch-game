@@ -20,9 +20,9 @@
 
 import * as p5 from "p5";
 
-import { Game } from "@scenes/game";
-import { Menu } from "@scenes/menu";
-import { Scene } from "@utils/scene";
+import { Game } from "./scenes/game";
+import { Menu } from "./scenes/menu";
+import { Scene } from "./utils/scene";
 
 /**
  * Contains the set of functions to be called by p5 handlers in order to start
@@ -48,11 +48,9 @@ export class Sketch {
      * @param p - p5 instance.
      */
     constructor(p: p5) {
-        // Initialize and append all available game scenes to the internal array.
-        this.scenes = [
-            new Menu(this),
-            new Game(this)
-        ];
+        // Initialize and append all available game scenes to the internal
+        // array.
+        this.scenes = [new Menu(this), new Game(this)];
 
         // Activate the first scene.
         this.activateScene(0).catch((reason) => {
@@ -81,9 +79,11 @@ export class Sketch {
     activateScene(index: number): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             // Check range.
-            if (this.scenes.length === 0
-                || index < 0
-                || index >= this.scenes.length) {
+            if (
+                this.scenes.length === 0 ||
+                index < 0 ||
+                index >= this.scenes.length
+            ) {
                 reject("Scene index out of range");
             }
 

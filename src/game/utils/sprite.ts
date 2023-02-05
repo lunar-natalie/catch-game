@@ -18,7 +18,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { V2d } from "@utils/primitives";
+import { V2d } from "./vector";
 
 /**
  * Image property wrapper for 2D graphical objects.
@@ -30,6 +30,16 @@ export class Sprite {
      */
     centerPoint: V2d;
 
+    /** Size of the graphical object in pixels. */
+    get size() {
+        return this._size;
+    }
+
+    set size(newSize) {
+        this._size = newSize;
+        this.centerPoint = { x: this.size.x / 2, y: this.size.y / 2 };
+    }
+
     /**
      * Internal size of the graphical object in pixels, accessed using the
      * {@link size} property.
@@ -39,21 +49,14 @@ export class Sprite {
     /**
      * Creates a new sprite object.
      *
-     * @param width - Width of the sprite in pixels.
-     * @param height - Height of the sprite in pixels.
+     * @param props - Destructured property parameters.
+     * @param props.width - Width of the sprite in pixels.
+     * @param props.height - Height of the sprite in pixels.
      */
-    constructor({ width = 0, height = 0 }:
-        { width?: number; height?: number; } = {}) {
+    constructor({
+        width = 0,
+        height = 0,
+    }: { width?: number; height?: number } = {}) {
         this.size = { x: width, y: height };
-    }
-
-    /** Size of the graphical object in pixels. */
-    get size() {
-        return this._size;
-    }
-
-    set size(newSize) {
-        this._size = newSize;
-        this.centerPoint = { x: this.size.x / 2, y: this.size.y / 2 };
     }
 }

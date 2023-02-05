@@ -20,8 +20,8 @@
 
 import * as p5 from "p5";
 
-import { MovingEntity } from "@utils/entity";
-import { Sprite } from "@utils/sprite";
+import { MovingEntity } from "@game/utils/entity";
+import { Sprite } from "@game/utils/sprite";
 
 /**
  * Entity representing an item on the canvas which can be collected by the
@@ -31,15 +31,27 @@ export class Collectible extends MovingEntity {
     /**
      * Creates a new collectible entity.
      *
-     * @param x - x-coordinate in pixels.
-     * @param y - y-coordinate in pixels.
-     * @param dx - x-velocity in pixels per millisecond.
-     * @param dy - y-velocity in pixels per millisecond.
-     * @param sprite - Sprite with which to draw the entity.
+     * @param props - Destructured property parameters.
+     * @param props.x - x-coordinate in pixels.
+     * @param props.y - y-coordinate in pixels.
+     * @param props.dx - x-velocity in pixels per millisecond.
+     * @param props.dy - y-velocity in pixels per millisecond.
+     * @param props.sprite - Sprite with which to draw the entity.
      */
-    constructor({ x = 0, y = 0, dx = 0, dy = 0, sprite }:
-        { x?: number; y?: number; dx?: number; dy?: number; sprite: Sprite; }) {
-        super({ x: x, y: y, dx: dx, dy: dy, sprite: sprite});
+    constructor({
+        x = 0,
+        y = 0,
+        dx = 0,
+        dy = 0,
+        sprite,
+    }: {
+        x?: number;
+        y?: number;
+        dx?: number;
+        dy?: number;
+        sprite: Sprite;
+    }) {
+        super({ x: x, y: y, dx: dx, dy: dy, sprite: sprite });
     }
 
     /**
@@ -60,7 +72,8 @@ export class Collectible extends MovingEntity {
      */
     private updatePosition(p: p5): void {
         this.position.y = Collectible.calcAxisPosition(p, {
-            currentPosition: this.position.y, velocity: this.velocity.y
+            currentPosition: this.position.y,
+            velocity: this.velocity.y,
         });
     }
 
@@ -73,7 +86,11 @@ export class Collectible extends MovingEntity {
     draw(p: p5): void {
         p.noStroke();
         p.fill(200);
-        p.ellipse(this.position.x, this.position.y, this.sprite.size.x,
-            this.sprite.size.y);
+        p.ellipse(
+            this.position.x,
+            this.position.y,
+            this.sprite.size.x,
+            this.sprite.size.y
+        );
     }
 }

@@ -24,6 +24,6 @@ import { Sketch } from "@game/sketch";
 
 // Create a p5 instance using the methods of a new Sketch object to handle
 // events and manage the game's individual scenes.
-new p5(function(p: p5) {
+new p5(function (p: p5) {
     return new Sketch(p);
 });

@@ -20,16 +20,23 @@
 
 import * as p5 from "p5";
 
-import { Scene, SceneSetupHandler, SceneKeyPressedHandler } from "@utils/scene";
+import {
+    Scene,
+    SceneSetupHandler,
+    SceneKeyPressedHandler,
+} from "@game/utils/scene";
 import { Sketch } from "@game/sketch";
-import { Title } from "@drawable/title";
+import { Title } from "@game/drawable/title";
+import { FontMetadata } from "@game/utils/font";
 
 /**
  * Scene for the Main Menu. Shows title and information, and waits for input
  * before advancing the scene in the sketch.
  */
-export class Menu extends Scene implements SceneSetupHandler,
-    SceneKeyPressedHandler {
+export class Menu
+    extends Scene
+    implements SceneSetupHandler, SceneKeyPressedHandler
+{
     private title: Title;
 
     /**
@@ -55,16 +62,20 @@ export class Menu extends Scene implements SceneSetupHandler,
         this.title = new Title([
             {
                 str: "Catch Game",
-                fontSize: 64,
-                color: { red: 255, green: 255, blue: 255 },
-                yEndPadding: 8
+                font: FontMetadata.auto({
+                    size: 64,
+                }),
+                fillColor: { red: 255, green: 255, blue: 255 },
+                yEndPadding: 8,
             },
             {
                 str: "Press RETURN to start",
-                fontSize: 32,
-                color: { red: 255, green: 255, blue: 255 },
-                yEndPadding: 0
-            }
+                font: FontMetadata.auto({
+                    size: 32,
+                }),
+                fillColor: { red: 255, green: 255, blue: 255 },
+                yEndPadding: 0,
+            },
         ]);
     }
 

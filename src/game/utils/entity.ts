@@ -20,9 +20,9 @@
 
 import * as p5 from "p5";
 
-import { Drawable } from "@utils/drawable";
-import { Sprite } from "@utils/sprite";
-import { V2d } from "@utils/primitives";
+import { Drawable } from "./drawable";
+import { Sprite } from "./sprite";
+import { V2d } from "./vector";
 
 /**
  * Represents a visible 2D object and all corresponding internal data.
@@ -37,12 +37,20 @@ export abstract class Entity implements Drawable {
     /**
      * Creates a new entity.
      *
-     * @param x - x-coordinate in pixels.
-     * @param y - y-coordinate in pixels.
-     * @param sprite - Sprite with which to draw the entity.
+     * @param props - Destructured property parameters.
+     * @param props.x - x-coordinate in pixels.
+     * @param props.y - y-coordinate in pixels.
+     * @param props.sprite - Sprite with which to draw the entity.
      */
-    constructor({ x = 0, y = 0, sprite }:
-        { x?: number; y?: number; sprite: Sprite; }) {
+    constructor({
+        x = 0,
+        y = 0,
+        sprite,
+    }: {
+        x?: number;
+        y?: number;
+        sprite: Sprite;
+    }) {
         this.position = { x: x, y: y };
         this.sprite = sprite;
     }
@@ -70,14 +78,16 @@ export abstract class Entity implements Drawable {
      * @returns `true` if collided, otherwise `false`.
      */
     didCollide(target: Entity): boolean {
-        return this.position.x + this.sprite.centerPoint.x
-                >= target.position.x - target.sprite.centerPoint.x
-            && this.position.x - this.sprite.centerPoint.x
-            <= target.position.x + target.sprite.centerPoint.x
-            && this.position.y + this.sprite.centerPoint.y
-            >= target.position.y - target.sprite.centerPoint.y
-            && this.position.y - this.sprite.centerPoint.y
-            <= target.position.y + target.sprite.centerPoint.y;
+        return (
+            this.position.x + this.sprite.centerPoint.x >=
+                target.position.x - target.sprite.centerPoint.x &&
+            this.position.x - this.sprite.centerPoint.x <=
+                target.position.x + target.sprite.centerPoint.x &&
+            this.position.y + this.sprite.centerPoint.y >=
+                target.position.y - target.sprite.centerPoint.y &&
+            this.position.y - this.sprite.centerPoint.y <=
+                target.position.y + target.sprite.centerPoint.y
+        );
     }
 }
 
@@ -92,14 +102,26 @@ export abstract class MovingEntity extends Entity {
     /**
      * Creates a new moving entity.
      *
-     * @param x - x-coordinate in pixels.
-     * @param y - y-coordinate in pixels.
-     * @param dx - x-velocity in pixels per millisecond.
-     * @param dy - y-velocity in pixels per millisecond.
-     * @param sprite - Sprite with which to draw the entity.
+     * @param props - Destructured property parameters.
+     * @param props.x - x-coordinate in pixels.
+     * @param props.y - y-coordinate in pixels.
+     * @param props.dx - x-velocity in pixels per millisecond.
+     * @param props.dy - y-velocity in pixels per millisecond.
+     * @param props.sprite - Sprite with which to draw the entity.
      */
-    constructor({ x = 0, y = 0, dx = 0, dy = 0, sprite }:
-        { x?: number; y?: number; dx?: number; dy?: number; sprite: Sprite; }) {
+    constructor({
+        x = 0,
+        y = 0,
+        dx = 0,
+        dy = 0,
+        sprite,
+    }: {
+        x?: number;
+        y?: number;
+        dx?: number;
+        dy?: number;
+        sprite: Sprite;
+    }) {
         super({ x: x, y: y, sprite: sprite });
         this.velocity = { x: dx, y: dy };
     }
@@ -109,14 +131,23 @@ export abstract class MovingEntity extends Entity {
      * canvas.
      *
      * @param p - p5 instance.
-     * @param currentPosition - The current position in pixels along the single
-     * axis of the canvas.
-     * @param velocity - The velocity in pixels per millisecond along the single
-     * axis of the canvas.
+     * @param props - Destructured property parameters.
+     * @param props.currentPosition - The current position in pixels along the
+     * single axis of the canvas.
+     * @param props.velocity - The velocity in pixels per millisecond along the
+     * single axis of the canvas.
+     * @returns Position in pixels.
      */
-    protected static calcAxisPosition(p: p5, { currentPosition, velocity }: {
-        currentPosition: number; velocity: number;
-    }): number {
-        return currentPosition + (p.deltaTime * velocity);
+    protected static calcAxisPosition(
+        p: p5,
+        {
+            currentPosition,
+            velocity,
+        }: {
+            currentPosition: number;
+            velocity: number;
+        }
+    ): number {
+        return currentPosition + p.deltaTime * velocity;
     }
 }

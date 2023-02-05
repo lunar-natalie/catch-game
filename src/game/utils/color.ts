@@ -1,5 +1,5 @@
 /**
- * @file Drawable interface.
+ * @file Color properties for graphical objects.
  * @author Natalie Wiggins <islifepeachy@outlook.com>
  * @version 1.0.0
  * @copyright (c) 2023 Natalie Wiggins, Ceri Miller and Sulaiman Syed.
@@ -21,13 +21,30 @@
 import * as p5 from "p5";
 
 /**
- * Represents an object which can be drawn to the canvas.
+ * Represents a color by the values of its RGBA components.
  */
-export interface Drawable {
-    /**
-     * Draws the object onto the canvas.
-     *
-     * @param p - p5 instance.
-     */
-    draw(p: p5): void;
+export interface ColorComponents {
+    /** Red component (0-255). */
+    red: number;
+
+    /** Green component (0-255). */
+    green: number;
+
+    /** Blue component (0-255). */
+    blue: number;
+
+    /** Alpha component (0-255). */
+    alpha?: number;
+}
+
+/**
+ * Sets the color used to fill shapes on the canvas, using a
+ * {@link ColorComponents} object.
+ *
+ * @param p - p5 instance.
+ * @param color Color data to use in call to {@link p5.fill}.
+ * @returns p5 instance.
+ */
+export function fill(p: p5, color: ColorComponents): p5 {
+    return p.fill(color.red, color.green, color.blue, color.alpha);
 }

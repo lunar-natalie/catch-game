@@ -1,13 +1,37 @@
 root = true
 
 [*]
+charset = utf-8
+end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{html,json,ts}]
+[*.css]
 indent_style = space
 tab_width = 4
+max_line_length = 80
 
-[README.md,package.json]
+[*.html]
 indent_style = space
 tab_width = 2
+max_line_length = 120
+
+[{*.json,.parcelrc}]
+indent_style = space
+tab_width = 4
+max_line_length = 80
+
+[*.md]
+indent_style = space
+tab_width = 2
+max_line_length = 80
+
+[*.ts]
+indent_style = space
+tab_width = 4
+max_line_length = 80
+
+[package.json]
+indent_style = space
+tab_width = 2
+max_line_length = 80

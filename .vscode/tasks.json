@@ -53,6 +53,15 @@
             "args": [
                 "start"
             ]
+        },
+        {
+            "label": "Format source files",
+            "detail": "Formats all source files using Prettier",
+            "type": "shell",
+            "command": "yarn",
+            "args": [
+                "format"
+            ]
         }
     ]
 }

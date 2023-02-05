@@ -59,10 +59,12 @@ export abstract class Scene {
      * @param scene - Scene to check.
      * @returns `true` if the scene implements the handler, otherwise `false`.
      */
-    static hasPreloadHandler(scene: object):
-        scene is ScenePreloadHandler {
-        return scene && "preload" in scene
-            && typeof scene["preload"] === "function";
+    static hasPreloadHandler(scene: object): scene is ScenePreloadHandler {
+        return (
+            scene &&
+            "preload" in scene &&
+            typeof scene["preload"] === "function"
+        );
     }
 
     /**
@@ -73,10 +75,10 @@ export abstract class Scene {
      * @param scene - Scene to check.
      * @returns `true` if the scene implements the handler, otherwise `false`.
      */
-    static hasSetupHandler(scene: object):
-        scene is SceneSetupHandler {
-        return scene && "setup" in scene
-            && typeof scene["setup"] === "function";
+    static hasSetupHandler(scene: object): scene is SceneSetupHandler {
+        return (
+            scene && "setup" in scene && typeof scene["setup"] === "function"
+        );
     }
 
     /**
@@ -87,10 +89,14 @@ export abstract class Scene {
      * @param scene - Scene to check.
      * @returns `true` if the scene implements the handler, otherwise `false`.
      */
-    static hasKeyPressedHandler(scene: object):
-        scene is SceneKeyPressedHandler {
-        return scene && "keyPressed" in scene
-            && typeof scene["keyPressed"] === "function";
+    static hasKeyPressedHandler(
+        scene: object
+    ): scene is SceneKeyPressedHandler {
+        return (
+            scene &&
+            "keyPressed" in scene &&
+            typeof scene["keyPressed"] === "function"
+        );
     }
 
     /**
@@ -101,10 +107,14 @@ export abstract class Scene {
      * @param scene - Scene to check.
      * @returns `true` if the scene implements the handler, otherwise `false`.
      */
-    static hasKeyReleasedHandler(scene: object):
-        scene is SceneKeyReleasedHandler {
-        return scene && "keyReleased" in scene
-            && typeof scene["keyReleased"] === "function";
+    static hasKeyReleasedHandler(
+        scene: object
+    ): scene is SceneKeyReleasedHandler {
+        return (
+            scene &&
+            "keyReleased" in scene &&
+            typeof scene["keyReleased"] === "function"
+        );
     }
 }
 
