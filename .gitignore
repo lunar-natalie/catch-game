@@ -5,5 +5,7 @@
 .replit
 .upm
 dist
+docs
 node_modules
 replit.nix
+yarn-error.log

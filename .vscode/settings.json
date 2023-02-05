@@ -1,11 +1,7 @@
 {
-    "cSpell.words": [
-        "Ceri",
-        "hitbox",
-        "keybind",
-        "Miller",
-        "POSIX",
-        "Sulaiman",
-        "Syed"
-    ]
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "files.associations": { "*.json": "jsonc" }
 }

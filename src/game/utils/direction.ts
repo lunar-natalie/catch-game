@@ -1,5 +1,5 @@
 /**
- * @file Drawable interface.
+ * @file Properties for the direction of an entity's movement.
  * @author Natalie Wiggins <islifepeachy@outlook.com>
  * @version 1.0.0
  * @copyright (c) 2023 Natalie Wiggins, Ceri Miller and Sulaiman Syed.
@@ -18,16 +18,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import * as p5 from "p5";
-
 /**
- * Represents an object which can be drawn to the canvas.
+ * Represents a 1D direction in the x-axis.
  */
-export interface Drawable {
-    /**
-     * Draws the object onto the canvas.
-     *
-     * @param p - p5 instance.
-     */
-    draw(p: p5): void;
+export interface XDirection {
+    left: boolean;
+    right: boolean;
 }

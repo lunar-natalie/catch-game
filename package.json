@@ -1,7 +1,7 @@
 {
   "name": "catch-game",
   "version": "1.0.0",
-  "description": "2D item collection platformer game for A level Computer Science",
+  "description": "2D item collector game for A level Computer Science",
   "source": "src/index.html",
   "targets": {
     "default": {
@@ -11,17 +11,29 @@
     }
   },
   "scripts": {
-    "start": "parcel serve"
+    "lint": "eslint src",
+    "lint-watch": "nodemon --watch src -e ts --exec 'eslint src'",
+    "format": "prettier --write src",
+    "start": "parcel serve",
+    "docs": "typedoc --entryPointStrategy expand --out docs ./src"
   },
   "keywords": [],
   "author": "Natalie Wiggins, Ceri Miller and Sulaiman Syed",
   "license": "GPL-3.0",
   "dependencies": {},
   "devDependencies": {
+    "@parcel/core": "^2.8.3",
+    "@parcel/plugin": "^2.0.0",
     "@types/p5": "^1.4.3",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "^8.32.0",
+    "nodemon": "^2.0.20",
     "p5": "^1.5.0",
     "parcel": "^2.8.2",
     "parcel-resolver-ts-base-url": "^1.3.1",
+    "prettier": "2.8.3",
+    "typedoc": "^0.23.24",
     "typescript": "^4.9.4"
   }
 }

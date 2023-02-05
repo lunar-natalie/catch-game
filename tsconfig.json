@@ -4,18 +4,6 @@
         "paths": {
             "@game/*": [
                 "./src/game/*"
-            ],
-            "@utils/*": [
-                "./src/game/utils/*"
-            ],
-            "@drawable/*": [
-                "./src/game/drawable/*"
-            ],
-            "@entities/*": [
-                "./src/game/entities/*"
-            ],
-            "@scenes/*": [
-                "./src/game/scenes/*"
             ]
         }
     }

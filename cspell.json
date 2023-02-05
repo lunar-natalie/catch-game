@@ -1,0 +1,33 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": ["*.in"],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "Ceri",
+        "drawables",
+        "hitbox",
+        "keybind",
+        "linebreak",
+        "Miller",
+        "platformer",
+        "POSIX",
+        "Sulaiman",
+        "Syed"
+    ],
+    "ignoreWords": [],
+    "import": [],
+    "patterns": [
+        {
+            "name": "markdown-code-block",
+            "pattern": "/^(\\s*`{3,}).*[\\s\\S]*?^\\1/gmx"
+        }
+    ],
+    "languageSettings": [
+        {
+            "languageId": "markdown",
+            "ignoreRegExpList": ["markdown-code-block"]
+        }
+    ]
+}

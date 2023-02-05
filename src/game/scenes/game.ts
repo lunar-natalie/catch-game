@@ -20,15 +20,69 @@
 
 import * as p5 from "p5";
 
-import { Player } from "@entities/player";
-import { Scene } from "@utils/scene";
+import { Collectible } from "@game/entities/collectible";
+import { Drawable } from "@game/utils/drawable";
+import { Entity } from "@game/utils/entity";
+import { HudAlignment, HudText } from "@game/drawable/hud-text";
+import { Player } from "@game/entities/player";
+import {
+    Scene,
+    SceneKeyPressedHandler,
+    SceneKeyReleasedHandler,
+} from "@game/utils/scene";
 import { Sketch } from "@game/sketch";
+import { Sprite } from "@game/utils/sprite";
+import { FontMetadata } from "@game/utils/font";
 
 /**
  * Scene for the main game.
  */
-export class Game extends Scene {
+export class Game
+    extends Scene
+    implements SceneKeyPressedHandler, SceneKeyReleasedHandler
+{
+    /** All entities to be updated and drawn to the canvas. */
+    private get entities(): Entity[] {
+        const all: Entity[] = [this.player];
+        return all.concat(this.collectibles);
+    }
+
+    private get drawables(): Drawable[] {
+        const all: Drawable[] = [this.hudText];
+        return all.concat(this.entities);
+    }
+
+    /** Heads-up display (score counter). */
+    private hudText: HudText;
+
+    /** User-controllable player entity. */
     private player: Player;
+
+    /** Collectible item entities. */
+    private collectibles: Collectible[];
+
+    /**
+     * Time in milliseconds until a new collectible item entity should be
+     * spawned.
+     */
+    private spawnTimer: number;
+
+    /** Default value to reset {@link spawnTimer} to. */
+    private spawnInterval = 600;
+
+    /** Number of items collected by the player. Limited to 999999. */
+    private get score(): number {
+        return this._score;
+    }
+
+    private set score(value: number) {
+        if (this._score >= 999999) {
+            return;
+        }
+        this._score = value;
+    }
+
+    private _score: number;
 
     /**
      * Creates the game scene.
@@ -52,13 +106,29 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     setup(p: p5): void {
-        // Initialize player properties.
+        this.hudText = new HudText({
+            y: 0,
+            hMargin: 8,
+            vMargin: 8,
+            alignment: HudAlignment.Right,
+            labelStr: "Score ",
+            labelFont: FontMetadata.auto({
+                size: 24,
+            }),
+            labelFillColor: { red: 255, green: 255, blue: 255 },
+        });
+
+        this.collectibles = [];
+
         this.player = new Player();
         this.player.sprite.size = { x: 200, y: 200 };
         this.player.accelerationModifier = { x: 1, y: 0.4 };
         this.player.decelerationModifier = { x: 0.0075, y: 0.005 };
         this.player.maxSpeed = { x: 0.75, y: 2 };
         this.player.resetPosition(p);
+
+        this.spawnTimer = 0;
+        this.score = 0;
     }
 
     /**
@@ -67,7 +137,7 @@ export class Game extends Scene {
      * active.
      *
      * Clears the canvas, sets canvas properties and updates and draws all
-     * current game object.
+     * current game objects.
      *
      * See {@link Scene.draw}, {@link Sketch.draw} and {@link p5.draw} for more
      * information.
@@ -75,10 +145,72 @@ export class Game extends Scene {
      * @param p - p5 instance.
      */
     draw(p: p5): void {
+        // Reset canvas base.
         p.clear(0, 0, 0, 0);
         p.background(0);
-        this.player.update(p);
-        this.player.draw(p);
+
+        // Conditionally spawn collectibles.
+        this.updateSpawnTimer(p);
+
+        // Call entity update routines comprising the internal entity movement
+        // and data logic.
+        this.entities.forEach((entity) => {
+            entity.update(p);
+        });
+
+        // Check collisions.
+        this.collectibles.forEach((entity, i, arr) => {
+            if (entity.didCollide(this.player)) {
+                // Increment score and delete collectible if collided with
+                // player.
+                ++this.score;
+                delete arr[i];
+            }
+        });
+
+        // Update HUD text.
+        this.hudText.setValueText(this.score.toString());
+        this.hudText.position.x = p.width;
+
+        // Draw all objects.
+        this.drawables.forEach((obj) => {
+            obj.draw(p);
+        });
+    }
+
+    /**
+     * Updates the collectible spawn timer and spawns a collectible if the timer
+     * has completed.
+     *
+     * @param p - p5 instance.
+     */
+    private updateSpawnTimer(p: p5): void {
+        if (this.spawnTimer <= 0) {
+            this.spawnTimer = this.spawnInterval;
+            this.spawnCollectible(p);
+        } else {
+            this.spawnTimer -= p.deltaTime;
+        }
+    }
+
+    /**
+     * Pushes a new collectible entity to the entities array, randomly
+     * positioned on the x-axis and moving from the top to the bottom of the
+     * screen.
+     *
+     * @param p - p5 instance.
+     */
+    private spawnCollectible(p: p5): void {
+        const collectibleSprite = new Sprite({ width: 100, height: 100 });
+        const collectible = new Collectible({
+            x:
+                collectibleSprite.centerPoint.x +
+                Math.random() * (p.width - 2 * collectibleSprite.centerPoint.x),
+            y: -collectibleSprite.centerPoint.y,
+            dy: 0.2,
+            sprite: collectibleSprite,
+        });
+        this.collectibles.push(collectible);
     }
 
     /**
@@ -92,11 +224,10 @@ export class Game extends Scene {
      * {@link p5.keyPressed} for more information.
      *
      * @param p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
      */
-    keyPressed(p: p5, _event?: object): void {
+    keyPressed(p: p5): void {
         switch (p.key) {
-            case ' ':
+            case " ":
                 this.player.isJumping = true;
                 break;
             default:
@@ -120,11 +251,10 @@ export class Game extends Scene {
      * {@link p5.keyReleased} for more information.
      *
      * @param p - p5 instance.
-     * @param _event - KeyboardEvent callback argument.
      */
-    keyReleased(p: p5, _event?: object): void {
+    keyReleased(p: p5): void {
         switch (p.key) {
-            case ' ':
+            case " ":
                 this.player.isJumping = false;
                 break;
             default:

@@ -1,5 +1,5 @@
 /**
- * @file Primitive data types for game rendering and logic routines.
+ * @file CSS utilities.
  * @author Natalie Wiggins <islifepeachy@outlook.com>
  * @version 1.0.0
  * @copyright (c) 2023 Natalie Wiggins, Ceri Miller and Sulaiman Syed.
@@ -19,34 +19,13 @@
  */
 
 /**
- * Represents a 2D vector.
+ * Gets the computed value of a CSS property of a given element in the current
+ * window.
+ *
+ * @param element - Element to extract the CSS property from.
+ * @param property - Name of the CSS property to get the value of.
+ * @returns Value of CSS property.
  */
-export interface V2d {
-    x: number;
-    y: number;
-}
-
-/**
- * Represents a 1D direction in the x-axis.
- */
-export interface XDirection {
-    left: boolean;
-    right: boolean;
-}
-
-/**
- * Represents a color by the values of its RGBA components.
- */
-export interface ColorComponents {
-    /** Red component (0-255). */
-    red: number;
-
-    /** Green component (0-255). */
-    green: number;
-
-    /** Blue component (0-255). */
-    blue: number;
-
-    /** Alpha component (0-255). */
-    alpha?: number;
+export function getCssStyle(element: Element, property: string): string {
+    return window.getComputedStyle(element).getPropertyValue(property);
 }
