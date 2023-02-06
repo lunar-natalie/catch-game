@@ -15,6 +15,7 @@ The online version can be found [here][www-hosted].
     * [Standalone](#standalone)
     * [VS Code](#vs-code)
   * [License](#license)
+  * [Asset licenses](#asset-licenses)
 
 ## Documentation
 
@@ -73,6 +74,15 @@ Written by Natalie Wiggins, Ceri Miller and Sulaiman Syed.
 
 See `LICENSE` for more information.
 
+## Asset licenses
+
+Listed paths are relative to the `static` directory in the source distribution,
+and are relative to the web root at runtime:
+
+- `images/bg.png`
+  - License: [CC BY 3.0][www-cc-by-3-0]
+
+[www-cc-by-3-0]: https://creativecommons.org/licenses/by/3.0/
 [www-chromium]: https://www.chromium.org/Home/
 [www-docs]: https://lunar-natalie.github.io/catch-game/
 [www-firefox]: https://www.mozilla.org/en-GB/firefox/
