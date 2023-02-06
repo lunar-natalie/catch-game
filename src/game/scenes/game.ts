@@ -140,6 +140,10 @@ export class Game
                 size: 24,
             }),
             labelFillColor: { red: 255, green: 255, blue: 255 },
+            valueFont: FontMetadata.auto({
+                weight: "bold",
+                size: 24,
+            }),
         });
 
         this.collectibles = [];

@@ -156,6 +156,11 @@ export class HudText implements Drawable {
     ): void {
         if (component.hasText()) {
             p.textSize(component.font.size);
+            if (component.font.weight === "bold") {
+                p.textStyle("bold");
+            } else {
+                p.textStyle("normal");
+            }
             fill(p, component.fillColor);
             p.text(component.str, position.x, position.y);
         }
