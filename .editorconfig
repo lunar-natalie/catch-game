@@ -31,6 +31,11 @@ indent_style = space
 tab_width = 4
 max_line_length = 80
 
+[*.yml]
+indent_style = space
+tab_width = 2
+max_line_length = 80
+
 [package.json]
 indent_style = space
 tab_width = 2
