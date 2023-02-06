@@ -98,7 +98,8 @@ export class Game
      * properties such as screen size and background color and to load media
      * such as images and fonts as the program starts.
      *
-     * Initializes the player.
+     * Initializes the HUD, arrays to be populated, the player, and game state
+     * properties.
      *
      * See {@link Scene.setup}, {@link Sketch.setup} and {@link p5.setup} for
      * more information.
@@ -136,8 +137,8 @@ export class Game
      * the program is stopped or {@link p5.noLoop} is called when the scene is
      * active.
      *
-     * Clears the canvas, sets canvas properties and updates and draws all
-     * current game objects.
+     * Clears the canvas, sets canvas properties, updates timers, updates HUD
+     * details, and updates and draws all current game objects.
      *
      * See {@link Scene.draw}, {@link Sketch.draw} and {@link p5.draw} for more
      * information.
