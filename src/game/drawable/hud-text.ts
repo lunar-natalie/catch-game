@@ -136,21 +136,28 @@ export class HudText implements Drawable {
         }
 
         p.noStroke();
+        HudText.drawComponent(p, this.labelComponent, labelPosition);
+        HudText.drawComponent(p, this.valueComponent, valuePosition);
+    }
 
-        if (this.labelComponent.hasText()) {
-            p.textSize(this.labelComponent.font.size);
-            if (this.labelComponent.fillColor) {
-                fill(p, this.labelComponent.fillColor);
-            }
-            p.text(this.labelComponent.str, labelPosition.x, labelPosition.y);
-        }
-
-        if (this.valueComponent.hasText()) {
-            p.textSize(this.valueComponent.font.size);
-            if (this.valueComponent.fillColor) {
-                fill(p, this.valueComponent.fillColor);
-            }
-            p.text(this.valueComponent.str, valuePosition.x, valuePosition.y);
+    /**
+     * Draws an individual component of text. The drawing context should have
+     * alignment and stroke properties already set.
+     *
+     * @param p - p5 instance.
+     * @param component - Data for the section of text.
+     * @param position - x- and y-coordinates to draw the text from on the
+     * canvas.
+     */
+    private static drawComponent(
+        p: p5,
+        component: HudTextComponent,
+        position: V2d
+    ): void {
+        if (component.hasText()) {
+            p.textSize(component.font.size);
+            fill(p, component.fillColor);
+            p.text(component.str, position.x, position.y);
         }
     }
 
