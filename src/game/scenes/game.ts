@@ -29,6 +29,7 @@ import {
     Scene,
     SceneKeyPressedHandler,
     SceneKeyReleasedHandler,
+    ScenePreloadHandler,
 } from "@game/utils/scene";
 import { Sketch } from "@game/sketch";
 import { Sprite } from "@game/utils/sprite";
@@ -39,14 +40,21 @@ import { FontMetadata } from "@game/utils/font";
  */
 export class Game
     extends Scene
-    implements SceneKeyPressedHandler, SceneKeyReleasedHandler
+    implements
+        ScenePreloadHandler,
+        SceneKeyPressedHandler,
+        SceneKeyReleasedHandler
 {
-    /** All entities to be updated and drawn to the canvas. */
+    /** Image used as the canvas background. */
+    private backgroundImage: p5.Image;
+
+    /** All entities to be updated each frame. */
     private get entities(): Entity[] {
         const all: Entity[] = [this.player];
         return all.concat(this.collectibles);
     }
 
+    /** All objects to be drawn to the canvas. */
     private get drawables(): Drawable[] {
         const all: Drawable[] = [this.hudText];
         return all.concat(this.entities);
@@ -91,6 +99,21 @@ export class Game
      */
     constructor(sketch: Sketch) {
         super(sketch);
+    }
+
+    /**
+     * Called before {@link setup} to handle asynchronous loading of external
+     * files in a blocking way.
+     *
+     * Loads the background image.
+     *
+     * See {@link ScenePreloadHandler}, {@link Sketch.preload} and
+     * {@link p5.preload} for more information.
+     *
+     * @param p - p5 instance.
+     */
+    preload(p: p5): void {
+        this.backgroundImage = p.loadImage("images/bg.png");
     }
 
     /**
@@ -148,7 +171,7 @@ export class Game
     draw(p: p5): void {
         // Reset canvas base.
         p.clear(0, 0, 0, 0);
-        p.background(0);
+        p.background(this.backgroundImage);
 
         // Conditionally spawn collectibles.
         this.updateSpawnTimer(p);
