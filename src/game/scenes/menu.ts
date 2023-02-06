@@ -63,6 +63,7 @@ export class Menu
             {
                 str: "Catch Game",
                 font: FontMetadata.auto({
+                    weight: "bold",
                     size: 64,
                 }),
                 fillColor: { red: 255, green: 255, blue: 255 },

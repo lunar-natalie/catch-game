@@ -57,6 +57,11 @@ export class Title implements Drawable {
         p.textAlign(p.CENTER);
         this.lines.forEach((line) => {
             p.textSize(line.font.size);
+            if (line.font.weight === "bold") {
+                p.textStyle("bold");
+            } else {
+                p.textStyle("normal");
+            }
             fill(p, line.fillColor);
             p.text(line.str, p.width / 2, p.height / 2 + totalHeight);
             totalHeight += line.font.size + line.yEndPadding;
