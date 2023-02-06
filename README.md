@@ -2,7 +2,7 @@
 
 Web-based 2D item collector game for A level Computer Science.
 
-See https://replit.com/@lunarnatalie/catch-game for an online version.
+The online version can be found [here][www-hosted].
 
 ## Table of contents
 
@@ -76,4 +76,5 @@ See `LICENSE` for more information.
 [www-chromium]: https://www.chromium.org/Home/
 [www-docs]: https://lunar-natalie.github.io/catch-game/
 [www-firefox]: https://www.mozilla.org/en-GB/firefox/
+[www-hosted]: https://catch-game.lunarnatalie.repl.co
 [www-typedoc]: https://typedoc.org/
