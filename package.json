@@ -15,7 +15,7 @@
     "lint-watch": "nodemon --watch src -e ts --exec 'eslint src'",
     "format": "prettier --write src",
     "start": "parcel serve",
-    "docs": "typedoc --entryPointStrategy expand --out docs ./src"
+    "docs": "typedoc --entryPointStrategy expand --out docs src"
   },
   "keywords": [],
   "author": "Natalie Wiggins, Ceri Miller and Sulaiman Syed",
